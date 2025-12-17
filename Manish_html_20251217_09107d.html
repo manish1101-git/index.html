@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tata Capital AI Loan Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            min-height: 90vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            font-size: 32px;
+            color: #667eea;
+        }
+
+        .user-details {
+            text-align: right;
+        }
+
+        .user-name {
+            display: block;
+            font-weight: 600;
+        }
+
+        .user-status {
+            font-size: 12px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            background: #27ae60;
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: flex;
+            min-height: 700px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            border-right: 1px solid #e1e8ed;
+            padding: 25px;
+        }
+
+        .customer-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .customer-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background: white;
+            margin-bottom: 20px;
+        }
+
+        .customer-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .customer-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .customer-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .detail-item {
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .detail-item span {
+            display: block;
+            color: #666;
+            font-size: 11px;
+        }
+
+        .detail-item strong {
+            color: #2c3e50;
+        }
+
+        /* Loan Calculator */
+        .calculator-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .slider-container {
+            margin-bottom: 20px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .slider-label span:last-child {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #e1e8ed;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .loan-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .loan-summary h4 {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .action-btn.secondary {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .chat-header h2 {
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        .progress-container {
+            background: #e1e8ed;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 20%;
+            transition: width 0.5s;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: #e1e8ed;
+            color: #666;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-weight: 600;
+        }
+
+        .step.active .step-number {
+            background: #667eea;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .step.active .step-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 15px;
+            border-radius: 18px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot {
+            background: white;
+            color: #333;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .message-header i {
+            font-size: 14px;
+        }
+
+        .message-header span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .message-content {
+            line-height: 1.5;
+        }
+
+        .loan-offer {
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 10px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .offer-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        /* Chat Input */
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            padding: 0 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Status Panel */
+        .status-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .status-item {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .status-item span {
+            display: block;
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .status-item strong {
+            color: #2c3e50;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .dashboard-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .chart-placeholder {
+            height: 150px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 18px;
+            width: fit-content;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>TATA CAPITAL</h1>
+                    <p>AI-Powered Banking Assistant</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name">Demo User</span>
+                    <span class="user-status online">Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Customer Selection -->
+                <div class="customer-section">
+                    <h3 class="section-title">Select Customer Profile</h3>
+                    <select class="customer-select" id="customerSelect">
+                        <option value="1">Rohan Mehta (Score: 780)</option>
+                        <option value="2">Priya Sharma (Score: 810)</option>
+                        <option value="3">Arun Kumar (Score: 690)</option>
+                        <option value="4">Neha Gupta (Score: 720)</option>
+                        <option value="5">Sanjay Patel (Score: 750)</option>
+                    </select>
+
+                    <div class="customer-card" id="customerCard">
+                        <!-- Customer details will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Loan Calculator -->
+                <div class="calculator-section">
+                    <h3 class="section-title">Loan Calculator</h3>
+                    
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span>Loan Amount</span>
+                            <span id="loanAmountValue">₹5,00,000</span>
+                        </div>
+                        <input type="range" min="50000" max="2000000" value="500000" step="25000" class="slider" id="loanAmountSlider">
+                    </div>
+
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span>Tenure (Years)</span>
+                            <span id="tenureValue">5 years</span>
+                        </div>
+                        <input type="range" min="1" max="7" value="5" step="1" class="slider" id="tenureSlider">
+                    </div>
+
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span>Interest Rate</span>
+                            <span id="interestValue">11.5%</span>
+                        </div>
+                        <input type="range" min="10.5" max="13.5" value="11.5" step="0.5" class="slider" id="interestSlider">
+                    </div>
+
+                    <div class="loan-summary">
+                        <h4>Loan Summary</h4>
+                        <div class="summary-item">
+                            <span>Monthly EMI:</span>
+                            <strong id="emiValue">₹10,750</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Total Interest:</span>
+                            <strong id="totalInterest">₹1,45,000</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Total Payment:</span>
+                            <strong id="totalPayment">₹6,45,000</strong>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="action-btn" onclick="applyForLoan(500000)">Apply for ₹5L</button>
+                        <button class="action-btn" onclick="applyForLoan(1000000)">Apply for ₹10L</button>
+                        <button class="action-btn secondary" onclick="checkEligibility()">Check Eligibility</button>
+                        <button class="action-btn secondary" onclick="resetChat()">Reset Chat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div class="chat-header">
+                    <h2><i class="fas fa-robot"></i> AI Loan Assistant</h2>
+                    <div class="status-badge pending" id="statusBadge">PENDING</div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar" style="width: 20%;"></div>
+                </div>
+
+                <!-- Progress Steps -->
+                <div class="progress-steps">
+                    <div class="step active" id="step1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Welcome</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Loan Details</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Verification</div>
+                    </div>
+                    <div class="step" id="step4">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Approval</div>
+                    </div>
+                    <div class="step" id="step5">
+                        <div class="step-number">5</div>
+                        <div class="step-label">Sanction</div>
+                    </div>
+                </div>
+
+                <!-- Chat Container -->
+                <div class="chat-container" id="chatContainer">
+                    <!-- Messages will be loaded here -->
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type your message here...">
+                    <button class="send-btn" onclick="sendMessage()">Send <i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Panel -->
+        <div class="status-panel">
+            <div class="status-header">
+                <h3>Application Status</h3>
+                <div class="status-badge pending" id="applicationStatus">PENDING</div>
+            </div>
+            
+            <div class="status-details">
+                <div class="status-item">
+                    <span>Application ID</span>
+                    <strong id="appId">TCL2024001</strong>
+                </div>
+                <div class="status-item">
+                    <span>Customer Name</span>
+                    <strong id="appCustomer">Rohan Mehta</strong>
+                </div>
+                <div class="status-item">
+                    <span>Loan Amount</span>
+                    <strong id="appAmount">₹5,00,000</strong>
+                </div>
+                <div class="status-item">
+                    <span>Current Step</span>
+                    <strong id="appStep">Step 1/5</strong>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div class="dashboard">
+                <div class="dashboard-card">
+                    <h3>Approval Statistics</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie"></i> 85% Approval Rate
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Processing Time</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-clock"></i> Avg: 4.5 minutes
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 Tata Capital Financial Services Ltd. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                <a href="#"><i class="fas fa-file-contract"></i> Terms & Conditions</a>
+                <a href="#"><i class="fas fa-phone-alt"></i> Contact: 1800-208-9898</a>
+                <a href="#"><i class="fas fa-envelope"></i> support@tatacapital.com</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Dummy Data
+        const customers = {
+            1: {
+                name: "Rohan Mehta",
+                age: 32,
+                city: "Mumbai",
+                income: 125000,
+                creditScore: 780,
+                preApproved: 800000,
+                existingLoan: 500000,
+                employment: "Software Engineer",
+                company: "Tech Solutions Ltd"
+            },
+            2: {
+                name: "Priya Sharma",
+                age: 28,
+                city: "Delhi",
+                income: 150000,
+                creditScore: 810,
+                preApproved: 1200000,
+                existingLoan: 0,
+                employment: "Marketing Manager",
+                company: "Global Brands Inc"
+            },
+            3: {
+                name: "Arun Kumar",
+                age: 45,
+                city: "Bangalore",
+                income: 180000,
+                creditScore: 690,
+                preApproved: 500000,
+                existingLoan: 3500000,
+                employment: "Business Owner",
+                company: "Kumar Enterprises"
+            },
+            4: {
+                name: "Neha Gupta",
+                age: 29,
+                city: "Hyderabad",
+                income: 90000,
+                creditScore: 720,
+                preApproved: 600000,
+                existingLoan: 200000,
+                employment: "Doctor",
+                company: "City Hospital"
+            },
+            5: {
+                name: "Sanjay Patel",
+                age: 38,
+                city: "Ahmedabad",
+                income: 200000,
+                creditScore: 750,
+                preApproved: 1500000,
+                existingLoan: 800000,
+                employment: "CA",
+                company: "Patel & Associates"
+            }
+        };
+
+        // App State
+        let currentCustomerId = 1;
+        let currentStep = 1;
+        let loanAmount = 500000;
+        let tenure = 5;
+        let interestRate = 11.5;
+        let chatHistory = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCustomerData();
+            updateLoanCalculator();
+            showWelcomeMessage();
+            updateStatusPanel();
+        });
+
+        // Load customer data
+        function loadCustomerData() {
+            const customer = customers[currentCustomerId];
+            const customerCard = document.getElementById('customerCard');
+            
+            customerCard.innerHTML = `
+                <h3>${customer.name}</h3>
+                <div class="customer-details">
+                    <div class="detail-item">
+                        <span>Age</span>
+                        <strong>${customer.age} years</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>City</span>
+                        <strong>${customer.city}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Income</span>
+                        <strong>₹${customer.income.toLocaleString()}/month</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Credit Score</span>
+                        <strong>${customer.creditScore}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Pre-Approved</span>
+                        <strong>₹${customer.preApproved.toLocaleString()}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Existing Loan</span>
+                        <strong>₹${customer.existingLoan.toLocaleString()}</strong>
+                    </div>
+                </div>
+            `;
+
+            // Update application status
+            document.getElementById('appCustomer').textContent = customer.name;
+        }
+
+        // Update loan calculator
+        function updateLoanCalculator() {
+            const emi = calculateEMI(loanAmount, interestRate, tenure);
+            const totalPayment = emi * tenure * 12;
+            const totalInterest = totalPayment - loanAmount;
+
+            document.getElementById('loanAmountValue').textContent = `₹${loanAmount.toLocaleString()}`;
+            document.getElementById('tenureValue').textContent = `${tenure} years`;
+            document.getElementById('interestValue').textContent = `${interestRate}%`;
+            document.getElementById('emiValue').textContent = `₹${emi.toLocaleString()}`;
+            document.getElementById('totalInterest').textContent = `₹${totalInterest.toLocaleString()}`;
+            document.getElementById('totalPayment').textContent = `₹${totalPayment.toLocaleString()}`;
+            document.getElementById('appAmount').textContent = `₹${loanAmount.toLocaleString()}`;
+        }
+
+        // Calculate EMI
+        function calculateEMI(principal, rate, years) {
+            const monthlyRate = rate / 12 / 100;
+            const months = years * 12;
+            const emi = principal * monthlyRate * Math.pow(1 + monthlyRate, months) / 
+                        (Math.pow(1 + monthlyRate, months) - 1);
+            return Math.round(emi);
+        }
+
+        // Event Listeners for sliders
+        document.getElementById('loanAmountSlider').addEventListener('input', function(e) {
+            loanAmount = parseInt(e.target.value);
+            updateLoanCalculator();
+        });
+
+        document.getElementById('tenureSlider').addEventListener('input', function(e) {
+            tenure = parseInt(e.target.value);
+            updateLoanCalculator();
+        });
+
+        document.getElementById('interestSlider').addEventListener('input', function(e) {
+            interestRate = parseFloat(e.target.value);
+            updateLoanCalculator();
+        });
+
+        document.getElementById('customerSelect').addEventListener('change', function(e) {
+            currentCustomerId = parseInt(e.target.value);
+            loadCustomerData();
+            showBotMessage("I've loaded the profile for " + customers[currentCustomerId].name + ". How can I assist you today?");
+        });
+
+        // Show welcome message
+        function showWelcomeMessage() {
+            const welcomeMsg = `Hello! 👋 I'm your Tata Capital AI Loan Assistant. 
+
+I can help you with:
+• Checking loan eligibility instantly
+• Calculating your EMI
+• Processing loan applications
+• Generating sanction letters
+
+How may I assist you today?`;
+
+            showBotMessage(welcomeMsg);
+        }
+
+        // Send message function
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Process based on current step
+            setTimeout(() => processUserMessage(message), 1000);
+        }
+
+        // Add message to chat
+        function addMessage(content, sender) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            if (sender === 'bot') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Assistant</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <i class="fas fa-user"></i>
+                        <span>You</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+            }
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            chatHistory.push({ sender, content });
+        }
+
+        // Show bot message
+        function showBotMessage(content) {
+            // Show typing indicator
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                addMessage(content, 'bot');
+            }, 1500);
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            const chatContainer = document.getElementById('chatContainer');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+                <span>AI Assistant is typing...</span>
+            `;
+            chatContainer.appendChild(typingDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Process user message
+        function processUserMessage(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (currentStep === 1) {
+                // Welcome step
+                if (lowerMessage.includes('loan') || lowerMessage.includes('need') || 
+                    lowerMessage.includes('amount') || lowerMessage.includes('money')) {
+                    currentStep = 2;
+                    updateProgress();
+                    
+                    const customer = customers[currentCustomerId];
+                    showBotMessage(`Great! I can see you're interested in a loan. 
+
+Your Profile:
+• Credit Score: ${customer.creditScore}
+• Pre-Approved Limit: ₹${customer.preApproved.toLocaleString()}
+• Monthly Income: ₹${customer.income.toLocaleString()}
+
+What loan amount are you looking for?`);
+                } else {
+                    showBotMessage("I'm here to help with loan applications. Could you tell me what loan amount you need?");
+                }
+            }
+            else if (currentStep === 2) {
+                // Loan details step
+                if (lowerMessage.includes('eligibility') || lowerMessage.includes('check')) {
+                    checkEligibility();
+                } else if (lowerMessage.includes('apply') || lowerMessage.includes('proceed')) {
+                    currentStep = 3;
+                    updateProgress();
+                    processLoanApplication();
+                } else {
+                    showBotMessage(`For ₹${loanAmount.toLocaleString()}, your estimated EMI would be ₹${calculateEMI(loanAmount, interestRate, tenure).toLocaleString()} for ${tenure} years.
+
+Would you like to check eligibility and proceed with the application?`);
+                }
+            }
+            else if (currentStep === 3) {
+                // Verification step
+                if (lowerMessage.includes('yes') || lowerMessage.includes('proceed') || lowerMessage.includes('ok')) {
+                    currentStep = 4;
+                    updateProgress();
+                    showBotMessage(`✅ **KYC Verification Started**
+
+Please provide:
+1. Aadhaar Number: [______]
+2. PAN Number: [______]
+
+OR simply type "verify" to simulate verification.
+
+This usually takes 2-3 minutes.`);
+                } else if (lowerMessage.includes('verify')) {
+                    currentStep = 4;
+                    updateProgress();
+                    simulateVerification();
+                } else {
+                    showBotMessage("Please confirm if you'd like to proceed with KYC verification.");
+                }
+            }
+            else if (currentStep === 4) {
+                // Approval step
+                if (lowerMessage.includes('proceed') || lowerMessage.includes('next')) {
+                    currentStep = 5;
+                    updateProgress();
+                    generateSanctionLetter();
+                } else {
+                    showBotMessage("Please type 'proceed' to generate your sanction letter.");
+                }
+            }
+        }
+
+        // Check eligibility
+        function checkEligibility() {
+            const customer = customers[currentCustomerId];
+            const emi = calculateEMI(loanAmount, interestRate, tenure);
+            
+            let eligibilityResult;
+            let status = 'pending';
+            
+            if (customer.creditScore < 700) {
+                eligibilityResult = `❌ **Not Eligible**
+
+Reason: Credit score ${customer.creditScore} is below minimum requirement of 700.
+
+Suggestion: You can apply for ₹${customer.preApproved.toLocaleString()} (your pre-approved limit).`;
+                status = 'rejected';
+            } else if (loanAmount > customer.preApproved * 2) {
+                eligibilityResult = `❌ **Not Eligible**
+
+Reason: Requested amount exceeds maximum limit.
+
+Maximum you can apply: ₹${customer.preApproved * 2} (2x pre-approved limit)`;
+                status = 'rejected';
+            } else if (emi > customer.income * 0.5) {
+                eligibilityResult = `⚠️ **Conditional Eligibility**
+
+Reason: EMI exceeds 50% of monthly income.
+
+Consider:
+1. Reduce loan amount
+2. Increase tenure
+3. Current EMI: ₹${emi.toLocaleString()}
+4. Max affordable EMI: ₹${Math.round(customer.income * 0.5).toLocaleString()}`;
+                status = 'pending';
+            } else {
+                eligibilityResult = `✅ **Eligibility Confirmed!**
+
+You are eligible for ₹${loanAmount.toLocaleString()}!
+
+Details:
+• Loan Amount: ₹${loanAmount.toLocaleString()}
+• Interest Rate: ${interestRate}%
+• Tenure: ${tenure} years
+• Monthly EMI: ₹${emi.toLocaleString()}
+• Processing: Instant approval available
+
+Type "apply" to proceed with application.`;
+                status = 'approved';
+            }
+            
+            // Update status
+            updateStatus(status);
+            showBotMessage(eligibilityResult);
+            
+            if (status === 'approved') {
+                currentStep = 3;
+                updateProgress();
+            }
+        }
+
+        // Apply for loan (quick action)
+        function applyForLoan(amount) {
+            loanAmount = amount;
+            updateLoanCalculator();
+            
+            document.getElementById('chatInput').value = `I want to apply for ₹${amount.toLocaleString()} loan`;
+            sendMessage();
+        }
+
+        // Process loan application
+        function processLoanApplication() {
+            const customer = customers[currentCustomerId];
+            const emi = calculateEMI(loanAmount, interestRate, tenure);
+            
+            let response;
+            
+            if (loanAmount <= customer.preApproved) {
+                response = `🎉 **Instant Approval Available!**
+
+Loan Details:
+• Amount: ₹${loanAmount.toLocaleString()}
+• Interest Rate: ${interestRate}%
+• Tenure: ${tenure} years
+• EMI: ₹${emi.toLocaleString()}/month
+• Disbursement: Within 2 hours
+
+Would you like to proceed with KYC verification?`;
+                updateStatus('approved');
+            } else {
+                response = `✅ **Application Received**
+
+Your application for ₹${loanAmount.toLocaleString()} has been submitted.
+
+Required Documents:
+1. Last 3 months salary slips
+2. KYC documents (Aadhaar & PAN)
+3. Bank statements (6 months)
+
+Please upload documents or type "verify" to proceed.`;
+                updateStatus('pending');
+            }
+            
+            showBotMessage(response);
+        }
+
+        // Simulate verification
+        function simulateVerification() {
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                
+                const verificationMsg = `✅ **KYC Verification Complete!**
+
+Verification Details:
+• Status: Successfully verified
+• Customer ID: TCL${new Date().getFullYear()}${currentCustomerId.toString().padStart(3, '0')}
+• Documents Verified: Aadhaar, PAN
+• Verification Time: 2 minutes 18 seconds
+
+📄 **Generating Sanction Letter...**`;
+                
+                addMessage(verificationMsg, 'bot');
+                
+                setTimeout(() => {
+                    generateSanctionLetter();
+                }, 2000);
+            }, 3000);
+        }
+
+        // Generate sanction letter
+        function generateSanctionLetter() {
+            const customer = customers[currentCustomerId];
+            const emi = calculateEMI(loanAmount, interestRate, tenure);
+            const totalPayment = emi * tenure * 12;
+            
+            const sanctionMsg = `🎊 **Loan Sanctioned Successfully!**
+
+**Sanction Letter Details:**
+• Loan Account: TCL${new Date().getFullYear()}${currentCustomerId.toString().padStart(3, '0')}
+• Sanction Amount: ₹${loanAmount.toLocaleString()}
+• Interest Rate: ${interestRate}% p.a.
+• Tenure: ${tenure} years
+• EMI: ₹${emi.toLocaleString()}
+• First EMI Date: ${new Date().toLocaleDateString()}
+• Total Payment: ₹${totalPayment.toLocaleString()}
+
+**Next Steps:**
+1. Sanction letter sent to email
+2. e-Sign agreement within 24 hours
+3. Funds disbursed in 2 hours
+4. EMI starts next month
+
+**Customer Support:**
+• Phone: 1800-208-9898
+• Email: support@tatacapital.com
+• WhatsApp: +91-9876543210
+
+Thank you for choosing Tata Capital! 🙏`;
+            
+            updateStatus('approved');
+            showBotMessage(sanctionMsg);
+            
+            // Enable download
+            setTimeout(() => {
+                const downloadMsg = `📥 **Download Sanction Letter**
+
+Click the link below to download your sanction letter:
+<a href="#" onclick="downloadSanctionLetter()" style="color: #667eea; text-decoration: none; font-weight: 600;">
+    <i class="fas fa-download"></i> Download Sanction Letter (PDF)
+</a>`;
+                
+                const downloadDiv = document.createElement('div');
+                downloadDiv.className = 'message bot';
+                downloadDiv.innerHTML = `
+                    <div class="message-header">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Assistant</span>
+                    </div>
+                    <div class="message-content">${downloadMsg}</div>
+                `;
+                document.getElementById('chatContainer').appendChild(downloadDiv);
+            }, 1000);
+        }
+
+        // Update progress
+        function updateProgress() {
+            // Update progress bar
+            const progress = (currentStep / 5) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            
+            // Update steps
+            for (let i = 1; i <= 5; i++) {
+                const step = document.getElementById(`step${i}`);
+                if (i <= currentStep) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            }
+            
+            // Update status panel
+            document.getElementById('appStep').textContent = `Step ${currentStep}/5`;
+        }
+
+        // Update status
+        function updateStatus(status) {
+            const badge = document.getElementById('statusBadge');
+            const appStatus = document.getElementById('applicationStatus');
+            
+            badge.textContent = status.toUpperCase();
+            appStatus.textContent = status.toUpperCase();
+            
+            badge.className = `status-badge ${status}`;
+            appStatus.className = `status-badge ${status}`;
+        }
+
+        // Update status panel
+        function updateStatusPanel() {
+            document.getElementById('appId').textContent = 
+                `TCL${new Date().getFullYear()}${currentCustomerId.toString().padStart(3, '0')}`;
+        }
+
+        // Reset chat
+        function resetChat() {
+            currentStep = 1;
+            chatHistory = [];
+            document.getElementById('chatContainer').innerHTML = '';
+            updateProgress();
+            updateStatus('pending');
+            showWelcomeMessage();
+            updateStatusPanel();
+        }
+
+        // Download sanction letter (simulated)
+        function downloadSanctionLetter() {
+            const customer = customers[currentCustomerId];
+            const emi = calculateEMI(loanAmount, interestRate, tenure);
+            const totalPayment = emi * tenure * 12;
+            
+            const content = `
+TATA CAPITAL FINANCIAL SERVICES LTD.
+LOAN SANCTION LETTER
+
+Date: ${new Date().toLocaleDateString()}
+Sanction Letter No: TCL${new Date().getFullYear()}${currentCustomerId.toString().padStart(3, '0')}
+
+To,
+${customer.name}
+${customer.city}
+
+Dear Customer,
+
+We are pleased to inform you that your application for Personal Loan has been approved.
+
+SANCTION DETAILS:
+1. Loan Amount Sanctioned: ₹${loanAmount.toLocaleString()}
+2. Rate of Interest: ${interestRate}% p.a.
+3. Loan Tenure: ${tenure} years
+4. EMI Amount: ₹${emi.toLocaleString()}
+5. First EMI Date: ${new Date(new Date().setMonth(new Date().getMonth() + 1)).toLocaleDateString()}
+6. Total Interest Payable: ₹${(totalPayment - loanAmount).toLocaleString()}
+7. Total Payment: ₹${totalPayment.toLocaleString()}
+
+Terms and Conditions:
+1. This sanction is valid for 30 days
+2. Processing fees as applicable
+3. Insurance premium as applicable
+
+For Tata Capital Financial Services Limited
+
+Authorized Signatory
+            `;
+            
+            // Create download link
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Tata_Capital_Sanction_${new Date().getFullYear()}${currentCustomerId.toString().padStart(3, '0')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Sanction letter downloaded successfully!');
+        }
+
+        // Enter key support
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
